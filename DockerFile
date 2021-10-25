@@ -35,7 +35,7 @@ EXPOSE 8443
 
 RUN yum install -y yum-utils && \
     prepare-yum-repositories rhel-server-rhscl-7-rpms && \
-    INSTALL_PKGS="gettext hostname nss_wrapper bind-utils httpd24 httpd24-mod_ssl traceroute httpd24-mod_ldap httpd24-mod_session httpd24-mod_auth_mellon httpd24-mod_security openssl" && \
+    INSTALL_PKGS="gettext hostname nss_wrapper bind-utils httpd24 httpd24-mod_ssl httpd24-mod_ldap httpd24-mod_session httpd24-mod_auth_mellon traceroute openssl" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
@@ -60,13 +60,13 @@ ENV BASH_ENV=${HTTPD_APP_ROOT}/scl_enable \
     ENV=${HTTPD_APP_ROOT}/scl_enable \
     PROMPT_COMMAND=". ${HTTPD_APP_ROOT}/scl_enable"
 
-COPY ./s2i/bin/ $STI_SCRIPTS_PATH
-COPY ./root /
+#COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+#COPY ./root /
 
 # Reset permissions of filesystem to default values
-RUN /usr/libexec/httpd-prepare && rpm-file-permissions
+#RUN /usr/libexec/httpd-prepare && rpm-file-permissions
 
-USER 1001
+#USER 1001
 
 # Not using VOLUME statement since it's not working in OpenShift Online:
 # https://github.com/sclorg/httpd-container/issues/30
